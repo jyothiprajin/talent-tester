@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md4 class="text-center">
         <h1 class="display-3">
