@@ -32,6 +32,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
+                <v-btn to="/register">Register</v-btn>
                 <v-btn color="primary" @click="validate">Login</v-btn>
               </v-card-actions>
             </v-card>
