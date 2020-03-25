@@ -10,7 +10,13 @@
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
-                <v-form ref="form" v-model="valid" lazy-validation>
+                <v-form
+                  id="login-form"
+                  ref="form"
+                  v-model="valid"
+                  lazy-validation
+                  @submit.prevent="submit"
+                >
                   <v-text-field
                     label="e-mail"
                     name="email"
@@ -33,7 +39,9 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn to="/register">Register</v-btn>
-                <v-btn color="primary" @click="validate">Login</v-btn>
+                <v-btn color="primary" form="login-form" type="submit"
+                  >Login</v-btn
+                >
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -62,7 +70,7 @@ export default {
   },
   mounted() {},
   methods: {
-    validate() {
+    submit() {
       this.$refs.form.validate()
     }
   },

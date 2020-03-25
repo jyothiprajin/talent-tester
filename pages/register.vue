@@ -10,7 +10,13 @@
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
-                <v-form ref="form" v-model="valid" lazy-validation>
+                <v-form
+                  id="register-form"
+                  ref="form"
+                  v-model="valid"
+                  lazy-validation
+                  @submit.prevent="submit"
+                >
                   <v-text-field
                     v-model="name"
                     label="Full Name"
@@ -63,7 +69,9 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn to="/login">Login</v-btn>
-                <v-btn color="primary" @click="validate">Register</v-btn>
+                <v-btn color="primary" type="submit" form="register-form"
+                  >Register</v-btn
+                >
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -101,6 +109,7 @@ export default {
       ],
       confirmpassword: '',
       confirmpasswordRules: [
+        (v) => !!v || 'Confirm Password is required',
         (v) =>
           this.password === v || 'Confirm Password must match with password'
       ]
@@ -108,7 +117,7 @@ export default {
   },
   mounted() {},
   methods: {
-    validate() {
+    submit() {
       this.$refs.form.validate()
     }
   },
