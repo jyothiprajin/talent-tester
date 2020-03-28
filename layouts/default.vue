@@ -47,11 +47,11 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          title: 'Start',
+          to: '/test/start'
         }
       ],
-      title: 'Vuetify.js'
+      title: process.env.APP
     }
   }
 }
