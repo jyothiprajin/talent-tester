@@ -12,3 +12,7 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
   transition: background-color 5000s ease-in-out 0s;
 }
+.v-input--radio-group--row.justify-space-between {
+  .v-input--radio-group__input {
+        justify-content: space-between !important;
+}}
