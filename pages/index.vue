@@ -42,24 +42,4 @@
     </v-col>
   </v-row>
 </template>
-
-<script>
-import Logo from '~/components/Logo.vue'
-
-export default {
-  components: {
-    Logo
-  },
-  data() {
-    return {
-      loading: true
-    }
-  },
-  mounted() {
-    const vm = this
-    setTimeout(() => {
-      vm.loading = false
-    }, 1000)
-  }
-}
-</script>
+<script src="./index.script.js"></script>
