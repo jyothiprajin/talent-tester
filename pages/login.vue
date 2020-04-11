@@ -10,6 +10,7 @@
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
+                {{ valid }}
                 <v-form
                   id="login-form"
                   ref="form"
@@ -18,6 +19,7 @@
                   @submit.prevent="submit"
                 >
                   <v-text-field
+                    v-model="login.email"
                     label="e-mail"
                     name="email"
                     prepend-icon="person"
@@ -28,6 +30,7 @@
 
                   <v-text-field
                     id="password"
+                    v-model="login.password"
                     label="Password"
                     name="password"
                     prepend-icon="lock"

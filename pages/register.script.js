@@ -1,7 +1,9 @@
 export default {
   layout: 'empty',
+  auth: 'guest',
   data() {
     return {
+      valid: false,
       name: '',
       nameRules: [
         (v) => !!v || 'Name is required',
