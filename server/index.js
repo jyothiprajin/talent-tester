@@ -29,7 +29,7 @@ passport.use(
       usernameField: 'email',
       passwordField: 'password'
     },
-    function(email, password, done) {
+    (email, password, done) => {
       if (email !== 'a@a.com') {
         return done(new AuthenticationError('Invalid username'))
       }
@@ -44,7 +44,7 @@ const opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
 opts.secretOrKey = process.env.JWT_SECRET_OR_KEY
 passport.use(
-  new JwtStrategy(opts, function(payload, done) {
+  new JwtStrategy(opts, (payload, done) => {
     if (payload) {
       return done(null, payload)
     }
@@ -73,13 +73,13 @@ app.get('/api/auth/user', jwtAuth, (req, res) => {
   return res.json({ user: req.user })
 })
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.all('/api/**', (req, res, next) => {
   const err = new Error('URL Not Found')
   err.status = 404
   next(err)
 })
 //  error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   const status = err.status || 500
   res.status(status).jerror(status, err.message)
   next()
