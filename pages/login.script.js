@@ -4,6 +4,7 @@ export default {
   data() {
     return {
       valid: false,
+      serverError: '',
       login: {
         email: '',
         password: ''
@@ -11,31 +12,40 @@ export default {
       passwordRules: [
         (v) => !!v || 'Password is required',
         (v) =>
-          (v && v.length > 8) || 'Password must be greater than 8 characters'
+          (v && v.length > 8) || 'Password must be greater than 8 characters',
+        (v) => (v && !this.serverError.includes('password')) || this.serverError
       ],
       emailRules: [
         (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        (v) => (v && !this.serverError.includes('email')) || this.serverError
       ]
     }
   },
   mounted() {},
   methods: {
+    resetError() {
+      this.serverError = ''
+    },
     submit() {
       this.$refs.form.validate()
       if (this.valid) {
         this.userLogin()
       }
     },
-    async userLogin() {
-      try {
-        const response = await this.$auth.loginWith('local', {
+    userLogin() {
+      this.$auth
+        .loginWith('local', {
           data: this.login
         })
-        console.log(response)
-      } catch (err) {
-        console.error(err)
-      }
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((err) => {
+          this.serverError = err.response.data.message
+          this.$refs.form.validate()
+          console.error(err.response)
+        })
     }
   },
   head() {

@@ -13,7 +13,6 @@ class AuthenticationError extends Error {
     this.status = status || 401
   }
 }
-console.log(typeof AuthenticationError)
 const LocalStrategy = require('passport-local').Strategy
 const JwtStrategy = require('passport-jwt').Strategy
 const { ExtractJwt } = require('passport-jwt')
@@ -31,12 +30,12 @@ passport.use(
     },
     (email, password, done) => {
       if (email !== 'a@a.com') {
-        return done(new AuthenticationError('Invalid username'))
+        return done(new AuthenticationError('Invalid email-address'))
       }
       if (password !== 'mypassword') {
         return done(new AuthenticationError('Invalid password'))
       }
-      done(null, email, 'Login Success')
+      return done(null, email, 'Login Success')
     }
   )
 )
@@ -80,8 +79,10 @@ app.all('/api/**', (req, res, next) => {
 })
 //  error handler
 app.use((err, req, res, next) => {
-  const status = err.status || 500
-  res.status(status).jerror(status, err.message)
+  if (err) {
+    const status = err.status || 500
+    return res.status(status).jerror(status, err.message)
+  }
   next()
 })
 

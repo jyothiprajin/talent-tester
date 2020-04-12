@@ -10,13 +10,13 @@
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
-                {{ valid }}
                 <v-form
                   id="login-form"
                   ref="form"
                   v-model="valid"
                   lazy-validation
                   @submit.prevent="submit"
+                  @input="resetError"
                 >
                   <v-text-field
                     v-model="login.email"
