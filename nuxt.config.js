@@ -33,6 +33,7 @@ module.exports = {
   /*
    ** Global CSS
    */
+
   css: ['~/assets/custom.scss'],
   /*
    ** Plugins to load before mounting the App
@@ -69,6 +70,13 @@ module.exports = {
    ** https://github.com/nuxt-community/vuetify-module
    */
   auth: {
+    resetOnError: true,
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/login',
+      home: '/'
+    },
     strategies: {
       local: {
         endpoints: {

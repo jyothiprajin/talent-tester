@@ -5,7 +5,7 @@
   "author": "PRAJIN PRAKASH",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server --watch ./nuxt.config.js",
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production node server/index.js",
     "generate": "nuxt generate",
@@ -33,7 +33,9 @@
     "nuxt": "^2.0.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "vuex-persist": "^2.2.0",
+    "vuex-persistedstate": "^2.7.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.9",
