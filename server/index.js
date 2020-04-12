@@ -5,6 +5,15 @@ const app = express()
 // passport for auth
 
 const passport = require('passport')
+
+class AuthenticationError extends Error {
+  constructor(message, status) {
+    super(message)
+    this.name = 'AuthenticationError'
+    this.status = status || 401
+  }
+}
+console.log(typeof AuthenticationError)
 const LocalStrategy = require('passport-local').Strategy
 const JwtStrategy = require('passport-jwt').Strategy
 const { ExtractJwt } = require('passport-jwt')
@@ -22,10 +31,10 @@ passport.use(
     },
     function(email, password, done) {
       if (email !== 'a@a.com') {
-        return done(new Error('Invalid username'))
+        return done(new AuthenticationError('Invalid username'))
       }
       if (password !== 'mypassword') {
-        return done(new Error('invalid password'))
+        return done(new AuthenticationError('Invalid password'))
       }
       done(null, email, 'Login Success')
     }
@@ -39,29 +48,29 @@ passport.use(
     if (payload) {
       return done(null, payload)
     }
-    return done(new Error('bearer token invalid/expired'))
+    return done(new AuthenticationError('bearer token invalid/expired'))
   })
 )
 app.use(express.json())
 
-app.post('/api/auth/login', (req, res, next) => {
-  passport.authenticate('local', { session: false }, (error, user, info) => {
-    if (error) return res.status(401).jerror(401, error.message)
-    if (!user) return res.status(400).jerror(400, info.message)
-    const token = jwt.sign(user, process.env.JWT_SECRET_OR_KEY)
+app.post(
+  '/api/auth/login',
+  passport.authenticate('local', { session: false, failWithError: true }),
+  (req, res) => {
+    const token = jwt.sign(req.user, process.env.JWT_SECRET_OR_KEY)
     return res.json({ token })
-  })(req, res, next)
-})
+  }
+)
 
-const middleware = (req, res, next) => {
-  passport.authenticate('jwt', { session: false }, (error, user, info) => {
-    if (error) return res.status(401).jerror(401, error.message)
-    if (!user) return res.status(400).jerror(400, info.message)
-    next(user)
-  })(req, res, next)
+const jwtAuth = (req, res, next) => {
+  passport.authenticate('jwt', { session: false, failWithError: true })(
+    req,
+    res,
+    next
+  )
 }
-app.get('/api/auth/user', middleware, (req, res) => {
-  // return res.json({ user: req.user })
+app.get('/api/auth/user', jwtAuth, (req, res) => {
+  return res.json({ user: req.user })
 })
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
