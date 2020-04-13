@@ -131,7 +131,8 @@ export default {
   methods: {
     nextStep() {
       if (this.currentStep === this.instructions.length) {
-        this.selectionDialog = true
+        // this.selectionDialog = true
+        this.confirmToStart()
       } else {
         this.currentStep += 1
       }
