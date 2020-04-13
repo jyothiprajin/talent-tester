@@ -65,7 +65,8 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.BASE_URL
+    baseURL: process.env.BASE_URL,
+    https: process.env.HTTPS
   },
   /*
    ** vuetify module configuration
