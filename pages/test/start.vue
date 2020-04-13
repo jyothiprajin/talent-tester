@@ -132,6 +132,7 @@ export default {
     nextStep() {
       if (this.currentStep === this.instructions.length) {
         // this.selectionDialog = true
+        this.startMCQ()
         this.confirmToStart()
       } else {
         this.currentStep += 1
