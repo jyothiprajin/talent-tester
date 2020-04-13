@@ -14,3 +14,10 @@
 # [START gae_quickstart_yaml]
 runtime: nodejs10
 # [END gae_quickstart_yaml]
+env_variables:
+  APP: 'Talent Tester'
+  APP_DESCRIPTION: 'An online tester for evaluating talent '
+  BASE_URL: 'https://talent-tester.el.r.appspot.com'
+  JWT_SECRET_OR_KEY: 'somethingsecret'
+  MONGODB_CONNECTIONSTRING: 'mongodb://localhost:27017/?readPreference=primary&ssl=false'
+  HTTPS: 'true'
