@@ -2,91 +2,14 @@ const express = require('express')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
-// passport for auth
 
-const passport = require('passport')
-
-class AuthenticationError extends Error {
-  constructor(message, status) {
-    super(message)
-    this.name = 'AuthenticationError'
-    this.status = status || 401
-  }
-}
-const LocalStrategy = require('passport-local').Strategy
-const JwtStrategy = require('passport-jwt').Strategy
-const { ExtractJwt } = require('passport-jwt')
-const jwt = require('jsonwebtoken')
-require('express-jsend')
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
 
-passport.use(
-  new LocalStrategy(
-    {
-      usernameField: 'email',
-      passwordField: 'password'
-    },
-    (email, password, done) => {
-      if (email !== 'a@a.com') {
-        return done(new AuthenticationError('Invalid email-address'))
-      }
-      if (password !== 'mypassword') {
-        return done(new AuthenticationError('Invalid password'))
-      }
-      return done(null, email, 'Login Success')
-    }
-  )
-)
-const opts = {}
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
-opts.secretOrKey = process.env.JWT_SECRET_OR_KEY
-passport.use(
-  new JwtStrategy(opts, (payload, done) => {
-    if (payload) {
-      return done(null, payload)
-    }
-    return done(new AuthenticationError('bearer token invalid/expired'))
-  })
-)
-app.use(express.json())
-
-app.post(
-  '/api/auth/login',
-  passport.authenticate('local', { session: false, failWithError: true }),
-  (req, res) => {
-    const token = jwt.sign(req.user, process.env.JWT_SECRET_OR_KEY)
-    return res.json({ token })
-  }
-)
-
-const jwtAuth = (req, res, next) => {
-  passport.authenticate('jwt', { session: false, failWithError: true })(
-    req,
-    res,
-    next
-  )
-}
-app.get('/api/auth/user', jwtAuth, (req, res) => {
-  return res.json({ user: req.user })
-})
-// catch 404 and forward to error handler
-app.all('/api/**', (req, res, next) => {
-  const err = new Error('URL Not Found')
-  err.status = 404
-  next(err)
-})
-//  error handler
-app.use((err, req, res, next) => {
-  if (err) {
-    const status = err.status || 500
-    return res.status(status).jerror(status, err.message)
-  }
-  next()
-})
-
 async function start() {
+  // init backedn server
+  await require('./loaders').default({ expressApp: app })
   // Init Nuxt.js
   const nuxt = new Nuxt(config)
 
