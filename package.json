@@ -4,6 +4,7 @@
   "description": "My awe-inspiring Nuxt.js project",
   "author": "PRAJIN PRAKASH",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server --watch ./nuxt.config.js",
     "build": "nuxt build",
@@ -29,7 +30,6 @@
     "@nuxtjs/vuetify": "^1.0.0",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
-    "express-jsend": "^0.1.0",
     "jsonwebtoken": "^8.5.1",
     "nuxt": "^2.0.0",
     "passport": "^0.4.1",
