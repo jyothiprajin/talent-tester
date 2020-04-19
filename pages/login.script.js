@@ -39,12 +39,11 @@ export default {
           data: this.login
         })
         .then((response) => {
-          console.log(response)
+          alert('login success')
         })
         .catch((err) => {
           this.serverError = err.response.data.message
           this.$refs.form.validate()
-          console.error(err.response)
         })
     }
   },

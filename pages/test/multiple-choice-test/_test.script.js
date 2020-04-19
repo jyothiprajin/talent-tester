@@ -95,13 +95,8 @@ export default {
         this.e1 = 0
         alert('test complete')
       } else {
-        console.log('n', n)
         let next = n
-        console.log('next', next)
-
-        while (this.answers[(next = (next + 1) % this.count)].submited) {
-          console.log('next', next)
-        }
+        while (this.answers[(next = (next + 1) % this.count)].submited);
         this.e1 = next + 1
       }
     }
