@@ -2,11 +2,11 @@ import consola from 'consola'
 import jwt from 'jsonwebtoken'
 import Response from '../../lib/Response'
 import config from '../../config'
-import User from './../models/User'
+import User from '../../modals/User'
 // import { BadRequestError } from '../../lib/Error'
 class AuthService {
   constructor() {
-    this.model = new User().getInstance()
+    this.model = User
     this.signin = this.signin.bind(this)
     this.register = this.register.bind(this)
   }

@@ -7,7 +7,7 @@ export default async () => {
     useCreateIndex: true
   })
   const db = connection.connection.db
-  db.on('error', consola.error(' 🔥  connection error...'))
+  db.on('error', () => consola.error(' 🔥  connection error...'))
   db.on('connected', () => {
     consola.success(` ✌️  Database opened`)
   })

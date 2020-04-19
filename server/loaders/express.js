@@ -2,7 +2,7 @@ import cors from 'cors'
 import express from 'express'
 import routes from '../api'
 import config from '../config'
-import { NotFoundError } from '../../lib/Error'
+import { NotFoundError } from '../lib/Error'
 export default ({ app }) => {
   /**
    * Health Check endpoints
