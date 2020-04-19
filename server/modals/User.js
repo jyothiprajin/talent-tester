@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import uniqueValidator from 'mongoose-unique-validator'
-
+import AutoIncrementPlugin from '../lib/AutoIncrementPlugin'
 const User = new Schema(
   {
     firstName: { type: String, required: true },
@@ -14,21 +14,20 @@ const User = new Schema(
       type: String,
       required: true
     },
-    register_date: { type: Date, default: Date.now, required: true },
-    permissions: {
-      contributor: { type: Array },
-      reader: { type: Array }
+    registerYear: {
+      type: Number,
+      default: new Date().getUTCFullYear(),
+      required: true
     },
-    photo: { type: String, required: false },
-    title: { type: String, required: false },
-    bio: { type: String, required: false },
-    userSetting: {
-      type: Object,
-      dark: { type: Boolean },
-      drawer: { type: Boolean }
+    isAdmin: {
+      type: Boolean,
+      default: false
     }
   },
-  { strict: true }
+  {
+    strict: true,
+    timestamps: true
+  }
 )
 User.methods.encryptPassword = (password) => {
   return crypto
@@ -57,4 +56,5 @@ User.methods.checkPassword = (password) => {
   return this.encryptPassword(password) === this.hashedPassword
 }
 User.plugin(uniqueValidator)
+User.plugin(AutoIncrementPlugin)
 export default mongoose.model('users', User)
