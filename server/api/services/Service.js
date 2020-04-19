@@ -5,7 +5,8 @@ class Service {
   constructor(model) {
     this.model = model
     this.getAll = this.getAll.bind(this)
-    this.insert = this.insert.bind(this)
+    this.get = this.get.bind(this)
+    this.create = this.create.bind(this)
     this.update = this.update.bind(this)
     this.delete = this.delete.bind(this)
   }
@@ -31,7 +32,7 @@ class Service {
     return new Response({ item })
   }
 
-  async insert(data) {
+  async create(data) {
     const item = await this.model.create(data)
     return new Response({ item }, 201)
   }

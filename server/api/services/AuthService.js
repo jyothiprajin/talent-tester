@@ -7,6 +7,8 @@ import User from '../../modals/User'
 class AuthService {
   constructor() {
     this.model = User
+    this.getUserByEmail = this.getUserByEmail.bind(this)
+    this.getUserById = this.getUserById.bind(this)
     this.signin = this.signin.bind(this)
     this.register = this.register.bind(this)
   }
