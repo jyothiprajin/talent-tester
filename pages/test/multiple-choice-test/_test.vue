@@ -26,6 +26,9 @@
       <v-stepper-content :key="`${n}-content`" :step="n + 1">
         <v-card class="mb-12" elevation="10" color="lighten-1">
           <v-card-text>
+            {{ question.question }}
+          </v-card-text>
+          <v-card-text>
             <v-radio-group
               v-model="answers[n].answer"
               row
@@ -46,18 +49,24 @@
               ></v-radio>
             </v-radio-group>
           </v-card-text>
-          <v-card-actions>
+          <v-card-actions class="d-block d-sm-flex">
             <v-spacer></v-spacer>
             <v-btn
+              class="ma-3"
               :disabled="lastQuestion"
               color="error"
               @click="markForReviw(n)"
               >Mark for review
             </v-btn>
-            <v-btn :disabled="lastQuestion" @click="nextStep(n)">
+            <v-btn class="ma-3" :disabled="lastQuestion" @click="nextStep(n)">
               Skip
             </v-btn>
-            <v-btn :loading="complete" color="primary" @click="submit(n)">
+            <v-btn
+              class="ma-3"
+              :loading="complete"
+              color="primary"
+              @click="submit(n)"
+            >
               Submit
             </v-btn>
           </v-card-actions>
