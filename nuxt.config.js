@@ -1,6 +1,6 @@
 require('dotenv').config()
 const colors = require('vuetify/es5/util/colors').default
-
+const apiPrefix = process.env.API_PREFIX || '/api'
 module.exports = {
   mode: 'spa',
   /*
@@ -38,7 +38,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/axios-port.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -65,8 +65,9 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.BASE_URL,
-    https: process.env.HTTPS
+    baseURL: process.env.BASE_URL + apiPrefix,
+    https: process.env.HTTPS,
+    retry: { retries: 3 }
   },
   /*
    ** vuetify module configuration
@@ -83,19 +84,24 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
+          register: {
+            url: '/auth/register',
+            method: 'post'
+          },
           login: {
-            url: '/api/auth/login',
+            url: '/auth/login',
             method: 'post',
             propertyName: 'token'
           },
           logout: false,
-          user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+          user: { url: '/auth/user', method: 'get', propertyName: 'user' }
         }
         // tokenRequired: true,
         // tokenType: 'bearer'
         // autoFetchUser: true
       }
-    }
+    },
+    plugins: ['~/plugins/auth.js']
   },
   router: {
     middleware: ['auth']
