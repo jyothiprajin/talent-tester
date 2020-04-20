@@ -22,7 +22,6 @@ export default {
       ]
     }
   },
-  mounted() {},
   methods: {
     resetError() {
       this.serverError = ''
@@ -35,7 +34,7 @@ export default {
     },
     userLogin() {
       this.$auth
-        .loginWith('local', {
+        .login({
           data: this.login
         })
         .then((response) => {

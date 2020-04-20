@@ -38,7 +38,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/axios-port.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -84,6 +84,10 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
+          register: {
+            url: '/auth/register',
+            method: 'post'
+          },
           login: {
             url: '/auth/login',
             method: 'post',
@@ -96,7 +100,8 @@ module.exports = {
         // tokenType: 'bearer'
         // autoFetchUser: true
       }
-    }
+    },
+    plugins: ['~/plugins/auth.js']
   },
   router: {
     middleware: ['auth']
