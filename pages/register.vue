@@ -18,16 +18,25 @@
                   @submit.prevent="submit"
                 >
                   <v-text-field
-                    v-model="name"
-                    label="Full Name"
-                    name="name"
+                    v-model="register.firstName"
+                    label="First Name"
+                    name="firstName"
                     prepend-icon="person"
                     type="text"
                     required
-                    :rules="nameRules"
+                    :rules="firstNameRules"
                   ></v-text-field>
                   <v-text-field
-                    v-model="email"
+                    v-model="register.lastName"
+                    label="Last Name"
+                    name="lastName"
+                    prepend-icon="person"
+                    type="text"
+                    required
+                    :rules="lastNameRules"
+                  ></v-text-field>
+                  <v-text-field
+                    v-model="register.email"
                     label="e-mail"
                     name="email"
                     prepend-icon="email"
@@ -37,18 +46,8 @@
                   ></v-text-field>
 
                   <v-text-field
-                    v-model="phone"
-                    label="Mobile Number"
-                    name="phone"
-                    prepend-icon="phone"
-                    type="text"
-                    required
-                    :rules="phoneRules"
-                  ></v-text-field>
-
-                  <v-text-field
                     id="password"
-                    v-model="password"
+                    v-model="register.password"
                     label="Password"
                     name="password"
                     prepend-icon="lock"
@@ -57,7 +56,7 @@
                   ></v-text-field>
                   <v-text-field
                     id="confirmpassword"
-                    v-model="confirmpassword"
+                    v-model="register.confirmpassword"
                     label="Confirm Password"
                     name="confirmpassword"
                     prepend-icon="lock"

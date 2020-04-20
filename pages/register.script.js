@@ -3,41 +3,69 @@ export default {
   auth: 'guest',
   data() {
     return {
+      serverError: '',
+      register: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmpassword: ''
+      },
       valid: false,
-      name: '',
-      nameRules: [
-        (v) => !!v || 'Name is required',
-        (v) => (v && v.length <= 30) || 'Name must be less than 30 characters'
+      firstNameRules: [
+        (v) => !!v || 'First Name is required',
+        (v) =>
+          (v && v.length <= 30) || 'First Name must be less than 30 characters',
+        (v) =>
+          (v && !this.serverError.includes('First Name')) || this.serverError
       ],
-      email: '',
+      lastNameRules: [
+        (v) => !!v || 'Last Name is required',
+        (v) =>
+          (v && v.length <= 30) || 'Last Name must be less than 30 characters',
+        (v) =>
+          (v && !this.serverError.includes('Last Name')) || this.serverError
+      ],
       emailRules: [
         (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        (v) => (v && !this.serverError.includes('E-mail')) || this.serverError
       ],
-      phone: '',
-      phoneRules: [
-        (v) => !!v || 'Mobile Number is required',
-        (v) =>
-          /^(\+\d{1,3}[- ]?)?\d{10}$/.test(v) || 'Mobile Number must be valid'
-      ],
-      password: '',
       passwordRules: [
         (v) => !!v || 'Password is required',
         (v) =>
-          (v && v.length > 8) || 'Password must be greater than 8 characters'
+          (v && v.length > 8) || 'Password must be greater than 8 characters',
+        (v) => (v && !this.serverError.includes('password')) || this.serverError
       ],
-      confirmpassword: '',
       confirmpasswordRules: [
         (v) => !!v || 'Confirm Password is required',
         (v) =>
-          this.password === v || 'Confirm Password must match with password'
+          this.register.password === v ||
+          'Confirm Password must match with password',
+        (v) => (v && !this.serverError.includes('password')) || this.serverError
       ]
     }
   },
-  mounted() {},
   methods: {
     submit() {
       this.$refs.form.validate()
+      if (this.valid) {
+        this.userRegister()
+      }
+    },
+    userRegister() {
+      this.$auth
+        .register({
+          data: this.register
+        })
+        .then((response) => {
+          alert('login success')
+        })
+        .catch((err) => {
+          console.log(err)
+          this.serverError = err.response.data.message
+          this.$refs.form.validate()
+        })
     }
   },
   head() {
