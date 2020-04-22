@@ -1,5 +1,5 @@
 import AuthService from '../services/AuthService'
-
+import { BadRequestError } from '../../lib/Error'
 class AuthController {
   constructor() {
     this.service = new AuthService()
@@ -12,9 +12,13 @@ class AuthController {
     return response.send(res)
   }
 
-  async register(req, res) {
-    const response = await this.service.register(req.body)
-    return response.send(res)
+  async register(req, res, next) {
+    try {
+      const response = await this.service.register(req.body)
+      return response.send(res)
+    } catch (err) {
+      next(new BadRequestError(err.message))
+    }
   }
 
   async getCurrentUser(req, res) {

@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken'
 import Response from '../../lib/Response'
 import config from '../../config'
 import User from '../../modals/User'
-// import { BadRequestError } from '../../lib/Error'
 class AuthService {
   constructor() {
     this.model = User

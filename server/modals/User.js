@@ -1,3 +1,4 @@
+import crypto from 'crypto'
 import mongoose, { Schema } from 'mongoose'
 import uniqueValidator from 'mongoose-unique-validator'
 import AutoIncrementPlugin from '../lib/AutoIncrementPlugin'
@@ -29,12 +30,8 @@ const User = new Schema(
     timestamps: true
   }
 )
-User.methods.encryptPassword = (password) => {
-  return crypto
-    .createHmac('sha1', this.salt)
-    .update(password)
-    .digest('hex')
-  // more secure – return crypto.pbkdf2Sync(password, this.salt, 10000, 512);
+User.methods.encryptPassword = function(password) {
+  return crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512')
 }
 
 User.virtual('userId').get(() => {
@@ -44,8 +41,7 @@ User.virtual('userId').get(() => {
 User.virtual('password')
   .set(function(password) {
     this._plainPassword = password
-    this.salt = crypto.randomBytes(32).toString('hex')
-    // more secure - this.salt = crypto.randomBytes(128).toString('hex');
+    this.salt = crypto.randomBytes(128).toString('hex')
     this.hashedPassword = this.encryptPassword(password)
   })
   .get(function() {

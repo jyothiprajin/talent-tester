@@ -30,6 +30,7 @@
     "@nuxtjs/vuetify": "^1.0.0",
     "cors": "^2.8.5",
     "cross-env": "^5.2.0",
+    "crypto": "^1.0.1",
     "esm": "^3.2.25",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",

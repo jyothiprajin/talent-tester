@@ -3,6 +3,6 @@ import UserController from '../../controlers/UserController'
 
 export default () => {
   const route = Router()
-  route.get('/user', UserController.getCurrentUser)
+  route.get('/users', UserController.getAll)
   return route
 }
