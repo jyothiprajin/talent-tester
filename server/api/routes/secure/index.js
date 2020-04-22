@@ -3,6 +3,6 @@ import users from './users'
 
 export default () => {
   const route = Router()
-  route.use('/users', users)
+  route.use('/users', users())
   return route
 }

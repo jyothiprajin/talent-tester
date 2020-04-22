@@ -5,7 +5,7 @@ import { JWTAuth } from './middlewares/AuthMiddilware'
 
 export default () => {
   const app = Router()
-  app.use('/auth', auth)
-  app.use('/', JWTAuth, secure)
+  app.use('/auth', auth())
+  app.use('/', JWTAuth, secure())
   return app
 }
