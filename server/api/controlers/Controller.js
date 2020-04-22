@@ -1,3 +1,4 @@
+import { BadRequestError } from '../../lib/Error'
 class Controller {
   constructor(service) {
     this.service = service
@@ -6,33 +7,38 @@ class Controller {
     this.insert = this.insert.bind(this)
     this.update = this.update.bind(this)
     this.delete = this.delete.bind(this)
+    this.exec = this.exec.bind(this)
   }
 
-  async getAll(req, res) {
-    const response = await this.service.getAll(req.query)
-    return response.send(res)
+  getAll(req, res, next) {
+    this.exec(this.service.getAll(req.query), res, next)
   }
 
-  async get(req, res) {
-    const response = await this.service.get(req.params)
-    return response.send(res)
+  get(req, res, next) {
+    this.exec(this.service.get(req.params), res, next)
   }
 
-  async insert(req, res) {
-    const response = await this.service.insert(req.body)
-    return response.send(res)
+  insert(req, res, next) {
+    this.exec(this.service.insert(req.body), res, next)
   }
 
-  async update(req, res) {
+  update(req, res, next) {
     const { id } = req.params
-    const response = await this.service.update(id, req.body)
-    return response.send(res)
+    this.exec(this.service.update(id, req.body), res, next)
   }
 
-  async delete(req, res) {
+  delete(req, res, next) {
     const { id } = req.params
-    const response = await this.service.delete(id)
-    return response.send(res)
+    this.exec(this.service.delete(id), res, next)
+  }
+
+  async exec(proces, res, next) {
+    await proces.then(
+      (response) => {},
+      (err) => {
+        next(new BadRequestError(err.message))
+      }
+    )
   }
 }
 

@@ -7,11 +7,13 @@ export default async () => {
     useCreateIndex: true
   })
   const db = connection.connection.db
-  db.on('error', () => consola.error(' 🔥  connection error...'))
-  db.on('connected', () => {
+  connection.connection.on('error', () =>
+    consola.error(' 🔥  connection error...')
+  )
+  connection.connection.on('connected', () => {
     consola.success(` ✌️  Database opened`)
   })
-  db.on('disconnected', () => {
+  connection.connection.on('disconnected', () => {
     consola.warn('🛑 Database is disconnected')
   })
   return db

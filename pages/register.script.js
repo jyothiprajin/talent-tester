@@ -8,8 +8,7 @@ export default {
         firstName: '',
         lastName: '',
         email: '',
-        password: '',
-        confirmpassword: ''
+        password: ''
       },
       valid: false,
       firstNameRules: [
@@ -17,19 +16,18 @@ export default {
         (v) =>
           (v && v.length <= 30) || 'First Name must be less than 30 characters',
         (v) =>
-          (v && !this.serverError.includes('First Name')) || this.serverError
+          (v && !this.serverError.includes('firstName')) || this.serverError
       ],
       lastNameRules: [
         (v) => !!v || 'Last Name is required',
         (v) =>
           (v && v.length <= 30) || 'Last Name must be less than 30 characters',
-        (v) =>
-          (v && !this.serverError.includes('Last Name')) || this.serverError
+        (v) => (v && !this.serverError.includes('lastName')) || this.serverError
       ],
       emailRules: [
         (v) => !!v || 'E-mail is required',
         (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-        (v) => (v && !this.serverError.includes('E-mail')) || this.serverError
+        (v) => (v && !this.serverError.includes('email')) || this.serverError
       ],
       passwordRules: [
         (v) => !!v || 'Password is required',
@@ -47,6 +45,9 @@ export default {
     }
   },
   methods: {
+    resetError() {
+      this.serverError = ''
+    },
     submit() {
       this.$refs.form.validate()
       if (this.valid) {
@@ -59,10 +60,9 @@ export default {
           data: this.register
         })
         .then((response) => {
-          alert('login success')
+          alert(`registration success ${response}`)
         })
         .catch((err) => {
-          console.log(err)
           this.serverError = err.response.data.message
           this.$refs.form.validate()
         })

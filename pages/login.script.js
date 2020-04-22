@@ -42,9 +42,9 @@ export default {
           console.log(response)
         })
         .catch((err) => {
+          console.log(err)
           this.serverError = err.response.data.message
           this.$refs.form.validate()
-          console.error(err.response)
         })
     }
   },

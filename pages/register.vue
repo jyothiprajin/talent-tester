@@ -16,6 +16,7 @@
                   v-model="valid"
                   lazy-validation
                   @submit.prevent="submit"
+                  @input="resetError"
                 >
                   <v-text-field
                     v-model="register.firstName"
@@ -56,7 +57,6 @@
                   ></v-text-field>
                   <v-text-field
                     id="confirmpassword"
-                    v-model="register.confirmpassword"
                     label="Confirm Password"
                     name="confirmpassword"
                     prepend-icon="lock"

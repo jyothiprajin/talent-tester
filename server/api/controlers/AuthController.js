@@ -5,25 +5,30 @@ class AuthController {
     this.service = new AuthService()
     this.register = this.register.bind(this)
     this.getCurrentUser = this.getCurrentUser.bind(this)
+    this.exec = this.exec.bind(this)
   }
 
-  signin(req, res) {
-    const response = this.service.signin(req.body)
-    return response.send(res)
+  signin(req, res, next) {
+    this.exec(this.service.signin(req.body), res, next)
   }
 
-  async register(req, res, next) {
-    try {
-      const response = await this.service.register(req.body)
-      return response.send(res)
-    } catch (err) {
-      next(new BadRequestError(err.message))
-    }
+  register(req, res, next) {
+    this.exec(this.service.register(req.body), res, next)
   }
 
-  async getCurrentUser(req, res) {
-    const response = await this.service.get(req.user)
-    return response.send(res)
+  getCurrentUser(req, res, next) {
+    this.exec(this.service.get(req.user), res, next)
+  }
+
+  async exec(proces, res, next) {
+    await proces.then(
+      (response) => {
+        return response.send(res)
+      },
+      (err) => {
+        next(new BadRequestError(err.message))
+      }
+    )
   }
 }
 

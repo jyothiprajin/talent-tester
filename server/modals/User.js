@@ -9,11 +9,13 @@ const User = new Schema(
     email: { type: String, required: true, unique: true },
     hashedPassword: {
       type: String,
-      required: true
+      required: true,
+      select: false
     },
     salt: {
       type: String,
-      required: true
+      required: true,
+      select: false
     },
     registerYear: {
       type: Number,
@@ -51,6 +53,6 @@ User.virtual('password')
 User.methods.checkPassword = (password) => {
   return this.encryptPassword(password) === this.hashedPassword
 }
-User.plugin(uniqueValidator)
+User.plugin(uniqueValidator, { message: '{PATH} already exists' })
 User.plugin(AutoIncrementPlugin)
 export default mongoose.model('users', User)

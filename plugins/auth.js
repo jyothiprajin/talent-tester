@@ -1,8 +1,6 @@
 export default function({ $auth }) {
   $auth.register = async (payload) => {
     const { register } = $auth.strategies.local.options.endpoints
-    console.log($auth.strategies.local)
-    console.log(register)
     if (!register) {
       return Promise.resolve()
     }
