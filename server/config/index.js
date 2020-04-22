@@ -8,6 +8,8 @@ if (!envFound) {
 }
 
 export default {
+  /** show API error stack in response */
+  showErrorStack: process.env.ERROR_STACK || false,
   /**
    * That long string from mlab
    */
