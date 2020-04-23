@@ -1,5 +1,11 @@
 import config from '../config'
-class ServerError extends Error {
+export class ServerError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = this.name === 'Error' ? 'InternalServerError' : this.name
+    this.status = this.status || 500
+  }
+
   toJSON() {
     const json = {}
     Object.getOwnPropertyNames(this).forEach(function(key) {

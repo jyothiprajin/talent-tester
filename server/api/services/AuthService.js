@@ -9,11 +9,12 @@ class AuthService {
     this.getUserByEmail = this.getUserByEmail.bind(this)
     this.getUserById = this.getUserById.bind(this)
     this.signin = this.signin.bind(this)
-    this.register = this.register.bind(this)
+    this.createUser = this.createUser.bind(this)
+    this.createAdmin = this.createAdmin.bind(this)
   }
 
-  async getUserByEmail(email) {
-    const user = await this.model.findOne({ email })
+  async getUserByEmail(email, select = '') {
+    const user = await this.model.findOne({ email }).select(select)
     return user
   }
 
@@ -28,7 +29,14 @@ class AuthService {
     return new Response({ token })
   }
 
-  async register(data) {
+  async createUser(data) {
+    delete data.isAdmin
+    const item = await this.model.create(data)
+    return new Response({ item }, 201)
+  }
+
+  async createAdmin(data) {
+    data.isAdmin = true
     const item = await this.model.create(data)
     return new Response({ item }, 201)
   }

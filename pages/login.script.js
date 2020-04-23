@@ -38,11 +38,8 @@ export default {
         .loginWith('local', {
           data: this.login
         })
-        .then((response) => {
-          console.log(response)
-        })
+        .then((response) => {})
         .catch((err) => {
-          console.log(err)
           this.serverError = err.response.data.message
           this.$refs.form.validate()
         })

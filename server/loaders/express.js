@@ -2,7 +2,7 @@ import cors from 'cors'
 import express from 'express'
 import routes from '../api'
 import config from '../config'
-import { NotFoundError } from '../lib/Error'
+import { NotFoundError, ServerError } from '../lib/Error'
 export default ({ app }) => {
   /**
    * Health Check endpoints
@@ -35,8 +35,8 @@ export default ({ app }) => {
   // server error handler
   app.use((err, req, res, next) => {
     if (err) {
-      const status = err.status || 500 // default internal server error
-      return res.status(status).json(err)
+      if (!err.status) err = new ServerError(err) // default internal server error
+      return res.status(err.status).json(err)
     }
     next()
   })

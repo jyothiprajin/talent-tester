@@ -33,7 +33,15 @@ const User = new Schema(
   }
 )
 User.methods.encryptPassword = function(password) {
-  return crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512')
+  return crypto
+    .pbkdf2Sync(
+      Buffer.from(password, 'binary'),
+      Buffer.from(this.salt, 'binary'),
+      10000,
+      512,
+      'sha512'
+    )
+    .toString('hex')
 }
 
 User.virtual('userId').get(() => {
@@ -50,7 +58,7 @@ User.virtual('password')
     return this._plainPassword
   })
 
-User.methods.checkPassword = (password) => {
+User.methods.checkPassword = function(password) {
   return this.encryptPassword(password) === this.hashedPassword
 }
 User.plugin(uniqueValidator, { message: '{PATH} already exists' })
