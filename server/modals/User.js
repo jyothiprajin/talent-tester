@@ -22,14 +22,25 @@ const User = new Schema(
       default: new Date().getUTCFullYear(),
       required: true
     },
+    registerNo: {
+      type: Number,
+      default: 0,
+      required: true
+    },
     isAdmin: {
+      type: Boolean,
+      default: false
+    },
+    emailVerified: {
       type: Boolean,
       default: false
     }
   },
   {
     strict: true,
-    timestamps: true
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
   }
 )
 User.methods.encryptPassword = function(password) {
@@ -44,7 +55,7 @@ User.methods.encryptPassword = function(password) {
     .toString('hex')
 }
 
-User.virtual('userId').get(() => {
+User.virtual('userId').get(function() {
   return this.id
 })
 

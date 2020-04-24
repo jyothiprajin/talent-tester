@@ -34,7 +34,9 @@ class Controller {
 
   async exec(proces, res, next) {
     await proces.then(
-      (response) => {},
+      (response) => {
+        return response.send(res)
+      },
       (err) => {
         next(new BadRequestError(err.message))
       }

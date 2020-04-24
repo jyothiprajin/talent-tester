@@ -12,40 +12,39 @@ class Service {
   }
 
   async getAll(query) {
-    let { skip, limit } = query
+    let { number, size } = query
 
-    skip = skip ? Number(skip) : 0
-    limit = limit ? Number(limit) : 500
+    number = number ? Number(number) : 0
+    size = size ? Number(size) : 500
 
-    const items = await this.model
+    const results = await this.model
       .find()
-      .skip(skip)
-      .limit(limit)
-    const total = await this.model.count()
-
-    return new Response({ items, total })
+      .skip(number)
+      .limit(size)
+    const total = await this.model.countDocuments()
+    return new Response({ results, number, size, total })
   }
 
   async get(id) {
-    const item = await this.model.findById(id)
-    if (!item) throw new NotFoundError('Item not found')
-    return new Response({ item })
+    const data = await this.model.findById(id)
+    if (!data) throw new NotFoundError('Item not found')
+    return new Response({ data })
   }
 
-  async create(data) {
-    const item = await this.model.create(data)
-    return new Response({ item }, 201)
+  async create(input) {
+    const data = await this.model.create(input)
+    return new Response({ data }, 201)
   }
 
-  async update(id, data) {
-    const item = await this.model.findByIdAndUpdate(id, data, { new: true })
-    return new Response({ item }, 202)
+  async update(id, input) {
+    const data = await this.model.findByIdAndUpdate(id, input, { new: true })
+    return new Response({ data }, 202)
   }
 
   async delete(id) {
-    const item = await this.model.findByIdAndDelete(id)
-    if (!item) throw new NotFoundError('Item not found')
-    consola.info(' remode item ', item)
+    const data = await this.model.findByIdAndDelete(id)
+    if (!data) throw new NotFoundError('Item not found')
+    consola.info(' remode item ', data)
     return new Response(null, 204)
   }
 }

@@ -3,14 +3,15 @@ import { BadRequestError } from '../../lib/Error'
 class AuthController {
   constructor() {
     this.service = new AuthService()
+    this.signin = this.signin.bind(this)
     this.register = this.register.bind(this)
     this.registerAdmin = this.registerAdmin.bind(this)
     this.getCurrentUser = this.getCurrentUser.bind(this)
     this.exec = this.exec.bind(this)
   }
 
-  signin(req, res, next) {
-    this.exec(this.service.signin(req.body), res, next)
+  signin(req, res) {
+    this.service.signin(req.user).send(res)
   }
 
   register(req, res, next) {
@@ -22,7 +23,7 @@ class AuthController {
   }
 
   getCurrentUser(req, res, next) {
-    this.exec(this.service.get(req.user), res, next)
+    this.exec(this.service.getUser(req.user), res, next)
   }
 
   async exec(proces, res, next) {

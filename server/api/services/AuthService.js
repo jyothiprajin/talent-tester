@@ -8,6 +8,7 @@ class AuthService {
     this.model = User
     this.getUserByEmail = this.getUserByEmail.bind(this)
     this.getUserById = this.getUserById.bind(this)
+    this.getUser = this.getUser.bind(this)
     this.signin = this.signin.bind(this)
     this.createUser = this.createUser.bind(this)
     this.createAdmin = this.createAdmin.bind(this)
@@ -23,22 +24,28 @@ class AuthService {
     return user
   }
 
+  async getUser(id) {
+    const data = await this.getUserById(id)
+    return new Response({ data })
+  }
+
   signin(userId) {
     const token = jwt.sign(userId, config.jwtSecret)
     consola.info(`new token ${token} issues for user id  ${userId}`)
     return new Response({ token })
   }
 
-  async createUser(data) {
-    delete data.isAdmin
-    const item = await this.model.create(data)
-    return new Response({ item }, 201)
+  async createUser(input) {
+    delete input.isAdmin
+    delete input.emailVerified
+    const data = await this.model.create(input)
+    return new Response({ data }, 201)
   }
 
-  async createAdmin(data) {
-    data.isAdmin = true
-    const item = await this.model.create(data)
-    return new Response({ item }, 201)
+  async createAdmin(input) {
+    input.isAdmin = true
+    const data = await this.model.create(input)
+    return new Response({ data }, 201)
   }
 }
 
