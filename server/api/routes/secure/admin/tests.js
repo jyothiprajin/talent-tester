@@ -4,6 +4,7 @@ export default () => {
   const route = Router()
 
   route.get('/:id/mcqs', TestController.getMCQS)
+  route.post('/:id/mcqs', TestController.createMCQ)
   route.post('/:id/results', TestController.publishResults)
   route.get('/:id/results', TestController.getResults)
   route.post('/', TestController.create)

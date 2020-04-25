@@ -1,5 +1,5 @@
 import consola from 'consola'
-import Response from '../../lib/Response'
+
 import { NotFoundError } from '../../lib/Error'
 class Service {
   constructor(model) {
@@ -23,37 +23,37 @@ class Service {
       .skip(number)
       .limit(size)
     const total = await this.model.countDocuments()
-    return new Response({ results, number, size, total })
+    return { results, number, size, total }
   }
 
   async get(id) {
     const data = await this.model.findById(id)
     if (!data) throw new NotFoundError('Item not found')
-    return new Response({ data })
+    return { data }
   }
 
   async create(input) {
     const data = await this.model.create(input)
-    return new Response({ data }, 201)
+    return { data }
   }
 
   async update(id, input) {
     const data = await this.model.findByIdAndUpdate(id, input, { new: true })
     if (!data) throw new NotFoundError('Item not found')
-    return new Response({ data }, 202)
+    return { data }
   }
 
   async delete(id) {
     const data = await this.model.findByIdAndDelete(id)
     if (!data) throw new NotFoundError('Item not found')
     consola.info(' remode item ', data)
-    return new Response(null, 204)
+    return null
   }
 
   async populateRelated(id, name) {
     const data = await this.model.findById(id).populate(name)
     if (!data) throw new NotFoundError('Item not found')
-    return new Response({ results: data[name] })
+    return { results: data[name] }
   }
 }
 

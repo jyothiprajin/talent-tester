@@ -1,6 +1,6 @@
 import consola from 'consola'
 import jwt from 'jsonwebtoken'
-import Response from '../../lib/Response'
+
 import config from '../../config'
 import User from '../../modals/User'
 class AuthService {
@@ -26,20 +26,20 @@ class AuthService {
   signin(userId) {
     const token = jwt.sign(userId, config.jwtSecret)
     consola.info(`new token ${token} issues for user id  ${userId}`)
-    return new Response({ token })
+    return { token }
   }
 
   async createUser(input) {
     delete input.isAdmin
     delete input.emailVerified
     const data = await this.model.create(input)
-    return new Response({ data }, 201)
+    return { data }
   }
 
   async createAdmin(input) {
     input.isAdmin = true
     const data = await this.model.create(input)
-    return new Response({ data }, 201)
+    return { data }
   }
 }
 

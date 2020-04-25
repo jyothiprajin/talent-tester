@@ -12,15 +12,15 @@ class AuthController {
   }
 
   signin(req, res) {
-    this.service.signin(req.user).send(res)
+    return new Response(this.service.signin(req.user)).send(res)
   }
 
   register(req, res, next) {
-    this.exec(this.service.createUser(req.body), res, next)
+    this.exec(this.service.createUser(req.body), res, next, 201)
   }
 
   registerAdmin(req, res, next) {
-    this.exec(this.service.createAdmin(req.body), res, next)
+    this.exec(this.service.createAdmin(req.body), res, next, 201)
   }
 
   getCurrentUser(req, res, next) {
@@ -28,10 +28,10 @@ class AuthController {
     return new Response({ data }).send(res)
   }
 
-  async exec(proces, res, next) {
+  async exec(proces, res, next, code) {
     await proces.then(
       (response) => {
-        return response.send(res)
+        return new Response(response, code).send(res)
       },
       (err) => {
         next(err.status ? err : new BadRequestError(err.message))

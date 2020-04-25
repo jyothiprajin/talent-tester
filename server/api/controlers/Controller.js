@@ -1,4 +1,5 @@
 import { BadRequestError } from '../../lib/Error'
+import Response from '../../lib/Response'
 class Controller {
   constructor(service) {
     this.service = service
@@ -20,23 +21,23 @@ class Controller {
   }
 
   create(req, res, next) {
-    this.exec(this.service.create(req.body), res, next)
+    this.exec(this.service.create(req.body), res, next, 201)
   }
 
   update(req, res, next) {
     const { id } = req.params
-    this.exec(this.service.update(id, req.body), res, next)
+    this.exec(this.service.update(id, req.body), res, next, 202)
   }
 
   delete(req, res, next) {
     const { id } = req.params
-    this.exec(this.service.delete(id), res, next)
+    this.exec(this.service.delete(id), res, next, 204)
   }
 
-  async exec(proces, res, next) {
+  async exec(proces, res, next, code) {
     await proces.then(
       (response) => {
-        return response.send(res)
+        return new Response(response, code).send(res)
       },
       (err) => {
         next(err.status ? err : new BadRequestError(err.message))
