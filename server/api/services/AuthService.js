@@ -8,7 +8,6 @@ class AuthService {
     this.model = User
     this.getUserByEmail = this.getUserByEmail.bind(this)
     this.getUserById = this.getUserById.bind(this)
-    this.getUser = this.getUser.bind(this)
     this.signin = this.signin.bind(this)
     this.createUser = this.createUser.bind(this)
     this.createAdmin = this.createAdmin.bind(this)
@@ -22,11 +21,6 @@ class AuthService {
   async getUserById(id) {
     const user = await this.model.findById(id)
     return user
-  }
-
-  async getUser(id) {
-    const data = await this.getUserById(id)
-    return new Response({ data })
   }
 
   signin(userId) {

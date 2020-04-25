@@ -1,6 +1,6 @@
 import cors from 'cors'
 import express from 'express'
-import routes from '../api'
+import routes from '../api/routes'
 import config from '../config'
 import { NotFoundError, ServerError } from '../lib/Error'
 export default ({ app }) => {

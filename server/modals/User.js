@@ -4,9 +4,25 @@ import uniqueValidator from 'mongoose-unique-validator'
 import AutoIncrementPlugin from '../lib/AutoIncrementPlugin'
 const User = new Schema(
   {
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    tenentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Tenent',
+      required: true
+    },
+    firstName: {
+      type: String,
+      required: true
+    },
+    lastName: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      immutable: true
+    },
     hashedPassword: {
       type: String,
       required: true,
@@ -25,16 +41,19 @@ const User = new Schema(
     registerNo: {
       type: Number,
       default: 0,
-      required: true
+      required: true,
+      immutable: true
     },
     isAdmin: {
       type: Boolean,
-      default: false
+      default: false,
+      immutable: true
     },
     emailVerified: {
       type: Boolean,
       default: false
-    }
+    },
+    results: [{ type: mongoose.Schema.Types.ObjectId, select: false }]
   },
   {
     strict: true,

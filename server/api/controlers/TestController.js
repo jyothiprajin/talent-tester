@@ -1,9 +1,9 @@
-import UserService from '../services/UserService'
+import TestService from '../services/TestService'
 import Controller from './Controller'
 
-class UserController extends Controller {
+class TestController extends Controller {
   constructor() {
-    super(new UserService())
+    super(new TestService())
   }
 
   getResults(req, res, next) {
@@ -12,4 +12,4 @@ class UserController extends Controller {
   }
 }
 
-export default new UserController()
+export default new TestController()

@@ -11,7 +11,7 @@ class Service {
     this.delete = this.delete.bind(this)
   }
 
-  async getAll(query) {
+  async getAll(query, select = '') {
     let { number, size } = query
 
     number = number ? Number(number) : 0
@@ -19,6 +19,7 @@ class Service {
 
     const results = await this.model
       .find()
+      .select(select)
       .skip(number)
       .limit(size)
     const total = await this.model.countDocuments()
@@ -38,6 +39,7 @@ class Service {
 
   async update(id, input) {
     const data = await this.model.findByIdAndUpdate(id, input, { new: true })
+    if (!data) throw new NotFoundError('Item not found')
     return new Response({ data }, 202)
   }
 
@@ -46,6 +48,12 @@ class Service {
     if (!data) throw new NotFoundError('Item not found')
     consola.info(' remode item ', data)
     return new Response(null, 204)
+  }
+
+  async populateRelated(id, name) {
+    const data = await this.model.findById(id).populate(name)
+    if (!data) throw new NotFoundError('Item not found')
+    return new Response({ data })
   }
 }
 

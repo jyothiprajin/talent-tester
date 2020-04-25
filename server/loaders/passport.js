@@ -42,11 +42,11 @@ export default () => {
         if (isAdmin && !user.isAdmin) {
           return done(new UnauthorizedError("you don't have access to this "))
         }
+        return done(null, user)
       } catch (err) {
         consola.error(err)
         return done(new UnauthorizedError('bearer token invalid/expired'))
       }
-      return done(null, payload)
     }
     return done(new UnauthorizedError('bearer token invalid/expired'))
   }

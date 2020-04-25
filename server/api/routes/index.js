@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import auth from './routes/auth'
-import secure from './routes/secure'
-import { JWTAuth } from './middlewares/AuthMiddilware'
+import { JWTAuth } from '../middlewares/AuthMiddilware'
+import auth from './auth'
+import secure from './secure'
 
 export default () => {
   const app = Router()

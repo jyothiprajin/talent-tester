@@ -15,7 +15,8 @@ class Controller {
   }
 
   get(req, res, next) {
-    this.exec(this.service.get(req.params), res, next)
+    const { id } = req.params
+    this.exec(this.service.get(id), res, next)
   }
 
   insert(req, res, next) {
@@ -38,7 +39,7 @@ class Controller {
         return response.send(res)
       },
       (err) => {
-        next(new BadRequestError(err.message))
+        next(err.status ? err : new BadRequestError(err.message))
       }
     )
   }
