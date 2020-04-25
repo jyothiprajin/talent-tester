@@ -1,11 +1,16 @@
 import { Router } from 'express'
-import UserController from '../../../controlers/UserController'
+import TestController from '../../../controlers/TestController'
 export default () => {
   const route = Router()
-  route.get('/users', UserController.getAll)
-  route.get('/users/:id', UserController.get)
-  route.put('/users/:id', UserController.update)
-  route.delete('/users/:id', UserController.delete)
-  route.get('/users/:id/results', UserController.get)
+
+  route.get('/:id/mcqs', TestController.getMCQS)
+  route.post('/:id/results', TestController.publishResults)
+  route.get('/:id/results', TestController.getResults)
+  route.post('/', TestController.create)
+  route.get('/', TestController.getAll)
+  route.get('/:id', TestController.get)
+  route.put('/:id', TestController.update)
+  route.delete('/:id', TestController.delete)
+
   return route
 }

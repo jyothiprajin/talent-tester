@@ -4,7 +4,7 @@ class Controller {
     this.service = service
     this.getAll = this.getAll.bind(this)
     this.get = this.get.bind(this)
-    this.insert = this.insert.bind(this)
+    this.create = this.create.bind(this)
     this.update = this.update.bind(this)
     this.delete = this.delete.bind(this)
     this.exec = this.exec.bind(this)
@@ -19,8 +19,8 @@ class Controller {
     this.exec(this.service.get(id), res, next)
   }
 
-  insert(req, res, next) {
-    this.exec(this.service.insert(req.body), res, next)
+  create(req, res, next) {
+    this.exec(this.service.create(req.body), res, next)
   }
 
   update(req, res, next) {

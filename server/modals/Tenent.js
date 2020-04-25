@@ -41,7 +41,7 @@ const Tenent = new Schema(
     copyRight: {
       type: String,
       required: true,
-      default: `Copyright © ${new Date().getFullYear}`
+      default: 'Copyright ©' + new Date().getFullYear.toString()
     },
     icon: {
       type: String

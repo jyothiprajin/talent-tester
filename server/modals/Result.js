@@ -12,19 +12,23 @@ const Result = new Schema(
     },
     mark: {
       type: String,
-      required: true
+      required: true,
+      immutable: true
     },
     submitedAnswers: {
       type: Number,
-      default: 0
+      default: 0,
+      immutable: true
     },
     markedAnswers: {
       type: Number,
-      default: 0
+      default: 0,
+      immutable: true
     },
     correctAnswers: {
       type: Number,
-      default: 0
+      default: 0,
+      immutable: true
     }
   },
   {

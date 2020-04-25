@@ -1,11 +1,11 @@
 import { Router } from 'express'
-import UserController from '../../../controlers/UserController'
+import MCQController from '../../../controlers/MCQController'
 export default () => {
   const route = Router()
-  route.get('/users', UserController.getAll)
-  route.get('/users/:id', UserController.get)
-  route.put('/users/:id', UserController.update)
-  route.delete('/users/:id', UserController.delete)
-  route.get('/users/:id/results', UserController.get)
+  route.post('/', MCQController.create)
+  route.get('/', MCQController.getAll)
+  route.get('/:id', MCQController.get)
+  route.put('/:id', MCQController.update)
+  route.delete('/:id', MCQController.delete)
   return route
 }

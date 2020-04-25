@@ -10,8 +10,8 @@ const Test = new Schema(
       type: String,
       required: true
     },
-    mcqs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MCQ' }],
-    answers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Answer' }],
+    mcqs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'mcqs' }],
+    results: [{ type: mongoose.Schema.Types.ObjectId, ref: 'results' }],
     starDate: {
       type: Date,
       required: true,
@@ -29,7 +29,7 @@ const Test = new Schema(
     timer: {
       type: Number,
       required: true,
-      default: false
+      default: 0
     },
     failOnFocusOut: {
       type: Boolean,

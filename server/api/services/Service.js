@@ -53,7 +53,7 @@ class Service {
   async populateRelated(id, name) {
     const data = await this.model.findById(id).populate(name)
     if (!data) throw new NotFoundError('Item not found')
-    return new Response({ data })
+    return new Response({ results: data[name] })
   }
 }
 

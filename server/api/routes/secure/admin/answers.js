@@ -1,11 +1,8 @@
 import { Router } from 'express'
-import UserController from '../../../controlers/UserController'
+import AnswerController from '../../../controlers/AnswerController'
 export default () => {
   const route = Router()
-  route.get('/users', UserController.getAll)
-  route.get('/users/:id', UserController.get)
-  route.put('/users/:id', UserController.update)
-  route.delete('/users/:id', UserController.delete)
-  route.get('/users/:id/results', UserController.get)
+  route.get('/', AnswerController.getAll)
+  route.get('/:id', AnswerController.get)
   return route
 }
