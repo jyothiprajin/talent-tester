@@ -10,8 +10,6 @@ const Test = new Schema(
       type: String,
       required: true
     },
-    mcqs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'mcqs' }],
-    results: [{ type: mongoose.Schema.Types.ObjectId, ref: 'results' }],
     starDate: {
       type: Date,
       required: true,
@@ -20,7 +18,7 @@ const Test = new Schema(
     endDate: {
       type: Date,
       required: true,
-      default: new Date()
+      default: new Date(new Date().setMonth(new Date().getMonth() + 1))
     },
     duration: {
       type: Number,
@@ -64,5 +62,19 @@ const Test = new Schema(
     toObject: { virtuals: true }
   }
 )
-
-export default mongoose.model('tests', Test)
+Test.virtual('mcqs', {
+  ref: 'MCQ', // The model to use
+  localField: '_id',
+  foreignField: 'test'
+})
+Test.virtual('results', {
+  ref: 'Result', // The model to use
+  localField: '_id',
+  foreignField: 'test'
+})
+Test.virtual('answers', {
+  ref: 'Answer', // The model to use
+  localField: '_id',
+  foreignField: 'test'
+})
+export default mongoose.model('Test', Test)

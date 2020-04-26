@@ -3,7 +3,7 @@ import TestController from '../../../controlers/TestController'
 export default () => {
   const route = Router()
 
-  route.get('/:id/mcqs', TestController.getMCQS)
+  route.get('/:id/mcqs', TestController.getMCQSWithAnswers)
   route.post('/:id/mcqs', TestController.createMCQ)
   route.post('/:id/results', TestController.publishResults)
   route.get('/:id/results', TestController.getResults)

@@ -4,7 +4,7 @@ import uniqueValidator from 'mongoose-unique-validator'
 import AutoIncrementPlugin from '../lib/AutoIncrementPlugin'
 const User = new Schema(
   {
-    tenentId: {
+    tenent: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Tenent',
       required: true
@@ -52,8 +52,7 @@ const User = new Schema(
     emailVerified: {
       type: Boolean,
       default: false
-    },
-    results: [{ type: mongoose.Schema.Types.ObjectId, select: false }]
+    }
   },
   {
     strict: true,
@@ -93,4 +92,10 @@ User.methods.checkPassword = function(password) {
 }
 User.plugin(uniqueValidator, { message: '{PATH} already exists' })
 User.plugin(AutoIncrementPlugin)
-export default mongoose.model('users', User)
+
+User.virtual('results', {
+  ref: 'Result', // The model to use
+  localField: '_id',
+  foreignField: 'user'
+})
+export default mongoose.model('User', User)

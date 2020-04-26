@@ -6,7 +6,7 @@ class AuthController {
     this.service = new AuthService()
     this.signin = this.signin.bind(this)
     this.register = this.register.bind(this)
-    this.registerAdmin = this.registerAdmin.bind(this)
+    this.addAdmin = this.addAdmin.bind(this)
     this.getCurrentUser = this.getCurrentUser.bind(this)
     this.exec = this.exec.bind(this)
   }
@@ -19,7 +19,7 @@ class AuthController {
     this.exec(this.service.createUser(req.body), res, next, 201)
   }
 
-  registerAdmin(req, res, next) {
+  addAdmin(req, res, next) {
     this.exec(this.service.createAdmin(req.body), res, next, 201)
   }
 

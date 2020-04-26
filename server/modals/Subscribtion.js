@@ -2,10 +2,6 @@ import mongoose, { Schema } from 'mongoose'
 
 const Subscribtion = new Schema(
   {
-    tenentId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Tenent'
-    },
     name: {
       type: String,
       required: true,
@@ -35,4 +31,4 @@ const Subscribtion = new Schema(
   }
 )
 
-export default mongoose.model('subscribtions', Subscribtion)
+export default mongoose.model('Subscribtion', Subscribtion)

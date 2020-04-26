@@ -9,6 +9,7 @@ class Service {
     this.create = this.create.bind(this)
     this.update = this.update.bind(this)
     this.delete = this.delete.bind(this)
+    this.createOrUpdate = this.createOrUpdate.bind(this)
   }
 
   async getAll(query, select = '') {
@@ -50,10 +51,19 @@ class Service {
     return null
   }
 
-  async populateRelated(id, name) {
-    const data = await this.model.findById(id).populate(name)
+  async populateRelated(id, path, select = '', match = null) {
+    const data = await this.model.findById(id).populate({ path, select, match })
     if (!data) throw new NotFoundError('Item not found')
-    return { results: data[name] }
+    return { results: data[path] }
+  }
+
+  async createOrUpdate(find, input) {
+    const data = await this.model.findOneAndUpdate(find, input, {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    })
+    return { data }
   }
 }
 

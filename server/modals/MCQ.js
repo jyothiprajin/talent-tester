@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose'
 
 const MCQ = new Schema(
   {
-    testId: {
+    test: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Test'
     },
@@ -38,4 +38,4 @@ const MCQ = new Schema(
   }
 )
 
-export default mongoose.model('mcqs', MCQ)
+export default mongoose.model('MCQ', MCQ)

@@ -57,5 +57,9 @@ const Tenent = new Schema(
     toObject: { virtuals: true }
   }
 )
-
-export default mongoose.model('tenents', Tenent)
+Tenent.virtual('subscribtionslist', {
+  ref: 'SubscribtionList', // The model to use
+  localField: '_id',
+  foreignField: 'tenent'
+})
+export default mongoose.model('Tenent', Tenent)

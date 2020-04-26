@@ -10,6 +10,9 @@ class TestController extends Controller {
     this.resultservice = new ResultService()
     this.mcqsservice = new MCQService()
     this.getMCQS = this.getMCQS.bind(this)
+    this._getMCQS = this._getMCQS.bind(this)
+    this.getMCQSWithAnswers = this.getMCQSWithAnswers.bind(this)
+    this.getUserAnswers = this.getUserAnswers.bind(this)
     this.getResults = this.getResults.bind(this)
     this.publishResults = this.publishResults.bind(this)
     this.createMCQ = this.createMCQ.bind(this)
@@ -17,8 +20,34 @@ class TestController extends Controller {
   }
 
   getMCQS(req, res, next) {
+    this.exec(this._getMCQS(req), res, next)
+  }
+
+  async _getMCQS(req) {
     const { id } = req.params
-    this.exec(this.service.populateRelated(id, 'mcqs'), res, next)
+    const { user } = req
+    const response = await this.service.populateRelated(id, 'mcqs')
+    await this.resultservice.initTestResult(user, id)
+    return response
+  }
+
+  getMCQSWithAnswers(req, res, next) {
+    const { id } = req.params
+    this.exec(
+      this.service.populateRelated(id, 'mcqs', '+answerCode'),
+      res,
+      next
+    )
+  }
+
+  getUserAnswers(req, res, next) {
+    const { id } = req.params
+    const { user } = req
+    this.exec(
+      this.service.populateRelated(id, 'answers', '', { user }),
+      res,
+      next
+    )
   }
 
   createMCQ(req, res, next) {
@@ -28,12 +57,10 @@ class TestController extends Controller {
   async _createMCQ(req) {
     const { id } = req.params
     const test = await this.service.get(id)
-    if (!test.data) throw new NotFoundError('Item not found')
+    if (!test.data) throw new NotFoundError('Test not found')
     const input = req.body
-    input.testId = id
+    input.test = id
     const { data } = await this.mcqsservice.create(input)
-    if (data) test.data.mcqs.push(data)
-    test.data.save()
     return { data }
   }
 

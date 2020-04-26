@@ -2,17 +2,20 @@ import mongoose, { Schema } from 'mongoose'
 
 const Answer = new Schema(
   {
-    testId: {
+    test: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Test'
+      ref: 'Test',
+      required: true
     },
-    usertId: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      required: true
     },
-    mcqId: {
+    mcq: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'MCQ'
+      ref: 'MCQ',
+      required: true
     },
     answer: {
       type: String,
@@ -35,4 +38,4 @@ const Answer = new Schema(
   }
 )
 
-export default mongoose.model('answers', Answer)
+export default mongoose.model('Answer', Answer)
