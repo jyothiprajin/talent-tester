@@ -60,7 +60,15 @@ export default {
           data: this.register
         })
         .then((response) => {
-          alert(`registration success ${response}`)
+          this.$auth
+            .loginWith('local', {
+              data: this.register
+            })
+            .then((response) => {})
+            .catch((err) => {
+              this.serverError = err.response.data.message
+              this.$refs.form.validate()
+            })
         })
         .catch((err) => {
           this.serverError = err.response.data.message

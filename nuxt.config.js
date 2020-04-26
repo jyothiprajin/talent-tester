@@ -94,7 +94,7 @@ module.exports = {
             propertyName: 'token'
           },
           logout: false,
-          user: { url: '/auth/user', method: 'get', propertyName: 'user' }
+          user: { url: '/auth/user', method: 'get', propertyName: 'data' }
         }
         // tokenRequired: true,
         // tokenType: 'bearer'

@@ -33,7 +33,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn color="primary" nuxt to="/test/start">
+            <v-btn color="primary" nuxt to="/tests">
               Continue <v-icon dark left>mdi-arrow-right</v-icon>
             </v-btn>
           </v-card-actions>

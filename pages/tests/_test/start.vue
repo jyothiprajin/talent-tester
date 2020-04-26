@@ -97,6 +97,10 @@
 </template>
 <script>
 export default {
+  validate({ params }) {
+    // Must be a number
+    return /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i.test(params.id)
+  },
   data() {
     return {
       selectionDialog: false,

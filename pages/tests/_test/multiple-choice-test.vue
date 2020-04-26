@@ -75,4 +75,4 @@
     </template>
   </v-stepper>
 </template>
-<script src="./_test.script.js"></script>
+<script src="./multiple-choice-test.script.js"></script>

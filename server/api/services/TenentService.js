@@ -7,8 +7,8 @@ class TenentService extends Service {
   }
 
   async getByDomain(domain) {
-    const data = await this.model.findOne(domain)
-    if (!data) throw new NotFoundError('Item not found')
+    const data = await this.model.findOne({ domain })
+    if (!data) throw new NotFoundError('Tenent not found')
     return data
   }
 }
